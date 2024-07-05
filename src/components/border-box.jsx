@@ -1,7 +1,12 @@
 import { cn } from "@/lib/utils";
 import React, { useCallback, useMemo } from "react";
 
-const BorderBox = ({ color = "default", title = "", children }) => {
+const BorderBox = ({
+  color = "default",
+  title = "",
+  customTitleClass,
+  children,
+}) => {
   const borderColor = useMemo(() => {
     switch (color) {
       case "default":
@@ -15,7 +20,7 @@ const BorderBox = ({ color = "default", title = "", children }) => {
   return (
     <div
       className={cn(
-        "relative before:absolute before:inset-y-0 before:inset-x-3 before:border-y after:absolute after:inset-x-0 after:inset-y-3 after:border-x",
+        "relative before:absolute before:inset-y-0 before:inset-x-3 before:border-y after:absolute after:inset-x-0 after:inset-y-3 after:border-x before:-z-10 after:-z-10",
         {
           "after:border-cyan-500 before:border-cyan-500": color === "primary",
           "after:border-white/45 before:border-white/45": color === "default",
@@ -24,18 +29,19 @@ const BorderBox = ({ color = "default", title = "", children }) => {
     >
       <div>
         {title !== "" && (
-          <div
+          <p
             className={cn(
-              "border-b border-white/45",
-              color === "primary" && "border-cyan-500"
+              "border-b border-white/45 font-bold p-2 bg-white/5",
+              color === "primary" && "border-cyan-500 text-cyan-500 ",
+              customTitleClass
             )}
           >
-            <p className="text-cyan-500 font-bold p-2 text-sm">{title}</p>
-          </div>
+            {title}
+          </p>
         )}
         <div className="p-2">{children}</div>
       </div>
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 -z-10">
         <div
           className={cn(
             "absolute top-0 left-0 size-2 border-t-2 border-l-2",

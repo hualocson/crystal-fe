@@ -1,10 +1,17 @@
 "use client";
 
 import BorderBox from "@/components/border-box";
+import MyBreadcrumbList from "@/components/breadcrumb-list";
+
+const breadcrumb = [
+  { name: "Home", href: "/" },
+  { name: "Document", href: "/document" },
+];
 
 const FundamentalPage = () => {
   return (
     <div className="flex flex-col gap-4">
+      <MyBreadcrumbList breadcrumb={breadcrumb} />
       <BorderBox title="Crystal document" color="primary">
         <div className="flex flex-col gap-4 p-4">
           <p>
