@@ -1,22 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { BellAlertIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 import {
-  Cog6ToothIcon,
   DocumentDuplicateIcon,
   HomeIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
 import { BellIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon, current: true },
@@ -63,10 +56,16 @@ const SVG = () => {
 };
 
 export default function MainLayout({ children }) {
+  const pathname = usePathname();
   // active nav item
-  navigation.forEach((item) => {
-    item.current = window.location.pathname === item.href;
-  });
+  const newNav = useMemo(() => {
+    return navigation.map((item) => {
+      return {
+        ...item,
+        current: pathname === item.href,
+      };
+    });
+  }, [pathname]);
   return (
     <div className="relative h-screen">
       <span className="absolute inset-0 top-16 opacity-5 overflow-hidden">
@@ -80,9 +79,9 @@ export default function MainLayout({ children }) {
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
-                  {navigation.map((item) => (
+                  {newNav.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className={classNames(
                           item.current
@@ -101,7 +100,7 @@ export default function MainLayout({ children }) {
                           aria-hidden="true"
                         />
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -113,7 +112,7 @@ export default function MainLayout({ children }) {
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {teams.map((team) => (
                     <li key={team.name}>
-                      <a
+                      <Link
                         href={team.href}
                         className={classNames(
                           team.current
@@ -133,7 +132,7 @@ export default function MainLayout({ children }) {
                           {team.initial}
                         </span>
                         <span className="truncate">{team.name}</span>
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -143,7 +142,7 @@ export default function MainLayout({ children }) {
         </div>
       </div>
 
-      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 bg-slate-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 justify-between">
+      <div className="sticky top-0 z-[99] flex h-16 shrink-0 items-center gap-x-4 bg-slate-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 justify-between">
         <span>Logo</span>
         <BellIcon
           className="text-foreground group-hover:text-cyan-600 h-6 w-6 shrink-0"
