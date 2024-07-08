@@ -24,23 +24,29 @@ const UploadImage = () => {
   const [handledImage, setHandledImage] = useState();
   const router = useRouter();
   const [originImage, setOriginImage] = useLocalStorage("origin-image", "");
-  const [visibleImage, setVisibleImage] = useLocalStorage("visible-image", "");
   const [amodalImage, setAmodalImage] = useLocalStorage("amodal-image", "");
+
+  const [numInstances, setNumInstances] = useLocalStorage("num-instances", 0);
+
+  const [loading, setLoading] = useState(false);
+
   function handleChange(e) {
     const file = e.target.files[0];
     setFile(URL.createObjectURL(e.target.files[0]));
     setSelectedImage(file);
   }
 
-  const uploader = (file) => {
-    getBase64(file).then((base64) => {
+  const handleResponse = (originFile, amodalBase64, numInstance) => {
+    getBase64(originFile).then((base64) => {
       setOriginImage(base64);
-      setVisibleImage(base64);
-      setAmodalImage(base64);
     });
+
+    setAmodalImage(amodalBase64);
+    setNumInstances(numInstance);
   };
 
   async function handlePredictImage(e) {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("image", selectedImage);
@@ -51,12 +57,19 @@ const UploadImage = () => {
       if (!response.ok) {
         throw new Error("Failed to send image");
       }
-      const imageData = await response.blob();
-      const url = URL.createObjectURL(imageData);
-      console.log({ imageData, url });
-      setHandledImage(url);
+      const data = await response.json();
+      // data is object with key 'image' is base64 string, and numInstances is number
+      const base64 = data.image;
+      const numInstances = data.numInstances;
+      const imageData = `data:image/jpg;base64,${base64}`;
+      // const url = URL.createObjectURL(imageData);
+      // setHandledImage(url);
+      handleResponse(selectedImage, imageData, numInstances);
+      router.push("/crystal-ai/pred-image");
     } catch (error) {
       console.error("Error sending image:", error);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -86,7 +99,7 @@ const UploadImage = () => {
               <Image
                 src={file}
                 alt="Preview image"
-                layout="fill"
+                fill
                 className="object-contain"
               />
               <button
@@ -117,13 +130,10 @@ const UploadImage = () => {
           )}
         </span>
         <Button
-          disabled={!selectedImage}
-          onClick={() => {
-            uploader(selectedImage);
-            router.push("/crystal-ai/pred-image");
-          }}
+          disabled={!selectedImage || loading}
+          onClick={handlePredictImage}
         >
-          View results
+          {loading ? "Loading..." : "Predict Image"}
         </Button>
         {handledImage && (
           <span className="h-80 w-80 relative rounded-lg overflow-hidden ring-1 ring-gray-300">
