@@ -17,16 +17,13 @@ const TestPage = () => {
       const response = await fetch("http://localhost:8000/get-chart");
       const data = await response.json();
 
-      return setData(data);
+      return setData({
+        averageLengths: data.histogramData.average_lengths,
+        x: data.x,
+        pdf: data.pdf,
+      });
     };
     fetchData()
-      .then((res) =>
-        setData({
-          averageLengths: res.histogramData.averageLengths,
-          x: res.x,
-          pdf: res.pdf,
-        })
-      )
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);

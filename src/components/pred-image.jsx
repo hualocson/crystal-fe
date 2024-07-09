@@ -12,6 +12,7 @@ import UploadImageDialog from "./ui/upload-image-dialog";
 const PredImage = () => {
   const originImage = useReadLocalStorage("origin-image");
   const amodalImage = useReadLocalStorage("amodal-image");
+  const visibleImage = useReadLocalStorage("visible-image");
   const numInstances = useReadLocalStorage("num-instances");
 
   const router = useRouter();
@@ -30,7 +31,7 @@ const PredImage = () => {
               <div className="flex items-center gap-2 justify-evenly">
                 <div className="flex flex-col gap-2 items-center">
                   <button
-                    className="size-[350px] relative hover:brightness-125"
+                    className="size-[250px] relative hover:brightness-125"
                     onClick={() => {
                       setImageShow("origin");
                       setViewImage(true);
@@ -47,7 +48,7 @@ const PredImage = () => {
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <button
-                    className="size-[350px] relative hover:brightness-125"
+                    className="size-[250px] relative hover:brightness-125"
                     onClick={() => {
                       setImageShow("amodal");
                       setViewImage(true);
@@ -62,13 +63,31 @@ const PredImage = () => {
                   </button>
                   <p>Amodal</p>
                 </div>
+                <div className="flex flex-col gap-2 items-center">
+                  <button
+                    className="size-[250px] relative hover:brightness-125"
+                    onClick={() => {
+                      setImageShow("visible");
+                      setViewImage(true);
+                    }}
+                  >
+                    <Image
+                      fill
+                      src={visibleImage}
+                      alt="Predicted Image"
+                      className="object-contain"
+                    />
+                  </button>
+                  <p>Visible</p>
+                </div>
               </div>
             </BorderBox>
           )}
 
           <BorderBox color="primary" title="Description">
             <p className="text-white">This is the predicted image.</p>
-            <p>Number of crystal in image: {numInstances}</p>
+            <p>Number of amodal crystal in image: {numInstances.amodal}</p>
+            <p>Number of visible crystal in image: {numInstances.visible}</p>
           </BorderBox>
         </div>
       </BorderBox>

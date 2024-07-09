@@ -25,8 +25,12 @@ const UploadImage = () => {
   const router = useRouter();
   const [originImage, setOriginImage] = useLocalStorage("origin-image", "");
   const [amodalImage, setAmodalImage] = useLocalStorage("amodal-image", "");
+  const [visibleImage, setVisibleImage] = useLocalStorage("visible-image", "");
 
-  const [numInstances, setNumInstances] = useLocalStorage("num-instances", 0);
+  const [numInstances, setNumInstances] = useLocalStorage("num-instances", {
+    visible: 0,
+    amodal: 0,
+  });
 
   const [loading, setLoading] = useState(false);
 
@@ -36,12 +40,18 @@ const UploadImage = () => {
     setSelectedImage(file);
   }
 
-  const handleResponse = (originFile, amodalBase64, numInstance) => {
+  const handleResponse = (
+    originFile,
+    amodalBase64,
+    visibleBase64,
+    numInstance
+  ) => {
     getBase64(originFile).then((base64) => {
       setOriginImage(base64);
     });
 
     setAmodalImage(amodalBase64);
+    setVisibleImage(visibleBase64);
     setNumInstances(numInstance);
   };
 
@@ -59,12 +69,17 @@ const UploadImage = () => {
       }
       const data = await response.json();
       // data is object with key 'image' is base64 string, and numInstances is number
-      const base64 = data.image;
-      const numInstances = data.numInstances;
-      const imageData = `data:image/jpg;base64,${base64}`;
+      const amodalImageBase64 = data.amodalImage;
+      const visibleImageBase64 = data.visibleImage;
+      const { numAmodalInstances, numVisibleInstances } = data;
+      const amodalImage = `data:image/jpg;base64,${amodalImageBase64}`;
+      const visibleImage = `data:image/jpg;base64,${visibleImageBase64}`;
       // const url = URL.createObjectURL(imageData);
       // setHandledImage(url);
-      handleResponse(selectedImage, imageData, numInstances);
+      handleResponse(selectedImage, amodalImage, visibleImage, {
+        visible: numVisibleInstances,
+        amodal: numAmodalInstances,
+      });
       router.push("/crystal-ai/pred-image");
     } catch (error) {
       console.error("Error sending image:", error);
