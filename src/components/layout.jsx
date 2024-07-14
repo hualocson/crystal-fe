@@ -10,6 +10,7 @@ import { BellIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
+import Image from "next/image";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon, current: true },
@@ -22,8 +23,8 @@ const navigation = [
   },
 ];
 const teams = [
-  { id: 1, name: "Pham Phuc Binh", href: "#", initial: "B", current: false },
-  { id: 2, name: "Hua Loc Son", href: "#", initial: "S", current: false },
+  { id: 1, name: "Phạm Phúc Bình", href: "#", initial: "B", current: false },
+  { id: 2, name: "Hứa Lộc Sơn", href: "#", initial: "S", current: false },
 ];
 function classNames(...classes) {
   return cn(...classes);
@@ -72,7 +73,7 @@ export default function MainLayout({ children }) {
         <SVG />
       </span>
       {/* Static sidebar for desktop */}
-      <div className="fixed inset-y-0 top-20 z-50 flex w-72 flex-col text-foreground">
+      <div className="fixed inset-y-0 top-20 z-50 flex w-56 flex-col text-foreground">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4">
           <nav className="flex flex-1 flex-col">
@@ -85,7 +86,7 @@ export default function MainLayout({ children }) {
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-gray-900 text-cyan-500"
+                            ? "bg-slate-200 text-cyan-500"
                             : "text-foreground hover:bg-slate-700 hover:text-cyan-600",
                           "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
                         )}
@@ -142,14 +143,16 @@ export default function MainLayout({ children }) {
         </div>
       </div>
 
-      <div className="sticky top-0 z-[99] flex h-16 shrink-0 items-center gap-x-4 bg-slate-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 justify-between">
-        <span>Logo</span>
+      <div className="sticky top-0 z-[99] flex h-16 shrink-0 items-center gap-x-4 bg-slate-200 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 justify-between">
+        <span>
+          <Image src={"/logo.png"} alt="logo" width={40} height={40} />
+        </span>
         <BellIcon
           className="text-foreground group-hover:text-cyan-600 h-6 w-6 shrink-0"
           aria-hidden="true"
         />
       </div>
-      <div className="lg:pl-72">
+      <div className="lg:pl-56">
         <main className="py-6">
           <div className="px-4 sm:px-6 lg:px-8 max-w-screen-xl">{children}</div>
         </main>
