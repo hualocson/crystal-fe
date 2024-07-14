@@ -10,11 +10,11 @@ const BorderBox = ({
   const borderColor = useMemo(() => {
     switch (color) {
       case "default":
-        return "border-white/75";
+        return "border-black/75";
       case "primary":
         return "border-cyan-500";
       default:
-        return "border-white/75";
+        return "border-black/75";
     }
   }, [color]);
   return (
@@ -23,7 +23,7 @@ const BorderBox = ({
         "relative before:absolute before:inset-y-0 before:inset-x-3 before:border-y after:absolute after:inset-x-0 after:inset-y-3 after:border-x before:-z-10 after:-z-10",
         {
           "after:border-cyan-500 before:border-cyan-500": color === "primary",
-          "after:border-white/45 before:border-white/45": color === "default",
+          "after:border-black/45 before:border-black/45": color === "default",
         }
       )}
     >
@@ -31,7 +31,7 @@ const BorderBox = ({
         {title !== "" && (
           <p
             className={cn(
-              "border-b border-white/45 font-bold p-2 bg-white/5",
+              "border-b border-black/45 font-bold p-2 bg-black/5",
               color === "primary" && "border-cyan-500 text-cyan-500 ",
               customTitleClass
             )}
