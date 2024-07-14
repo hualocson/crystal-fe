@@ -103,12 +103,12 @@ const UploadImage = () => {
             <PlusIcon className="w-4 h-4 mr-2" />
             Upload Image(s)
           </Button>
-          <Button variant="outline" className="border-white/75">
+          <Button variant="outline" className="border-black/75">
             <UploadIcon className="w-4 h-4 mr-2" />
             Upload Directory
           </Button>
         </div>
-        <span className="flex h-80 w-full border-y border-white/15 items-center justify-center relative overflow-hidden">
+        <span className="flex h-80 w-full border-y border-black/15 items-center justify-center relative overflow-hidden">
           {file ? (
             <>
               <Image
