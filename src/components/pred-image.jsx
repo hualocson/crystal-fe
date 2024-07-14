@@ -23,7 +23,7 @@ const PredImage = () => {
     <div className="flex gap-2 items-start">
       <BorderBox
         title="Predicted Image"
-        customTitleClass={"text-white text-center text-xl"}
+        customTitleClass={"text-cyan-500 text-center text-xl"}
       >
         <div className="flex flex-col gap-4 p-2 max-h-screen overflow-hidden">
           {originImage && (
@@ -85,7 +85,7 @@ const PredImage = () => {
           )}
 
           <BorderBox color="primary" title="Description">
-            <p className="text-white">This is the predicted image.</p>
+            <p className="text-slate-400">This is the predicted image.</p>
             <p>Number of amodal crystal in image: {numInstances.amodal}</p>
             <p>Number of visible crystal in image: {numInstances.visible}</p>
           </BorderBox>
@@ -94,7 +94,7 @@ const PredImage = () => {
       <BorderBox
         title="Action"
         color="primary"
-        customTitleClass={"text-white text-center text-xl"}
+        customTitleClass={"text-cyan-500 text-center text-xl"}
       >
         <div className="flex items-center gap-2 p-4">
           <UploadImageDialog />
