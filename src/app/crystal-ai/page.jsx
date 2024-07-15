@@ -1,5 +1,6 @@
 import BorderBox from "@/components/border-box";
 import MyBreadcrumbList from "@/components/breadcrumb-list";
+import DirectoryUpload from "@/components/directory-upload";
 import { Button } from "@/components/ui/button";
 import UploadImage from "@/components/upload-image";
 import { PlusIcon } from "@heroicons/react/20/solid";
