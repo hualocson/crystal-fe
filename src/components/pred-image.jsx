@@ -53,7 +53,7 @@ const PredImage = () => {
                       >
                         <div className="flex items-center gap-2">
                           <div className="flex flex-col gap-2 items-center">
-                            <span className="size-[350px] relative hover:brightness-125">
+                            <span className="size-[250px] relative hover:brightness-125">
                               <Image
                                 fill
                                 src={item.originImage}
@@ -64,7 +64,7 @@ const PredImage = () => {
                             <p>Origin</p>
                           </div>
                           <div className="flex flex-col gap-2 items-center">
-                            <span className="size-[350px] relative hover:brightness-125">
+                            <span className="size-[250px] relative hover:brightness-125">
                               <Image
                                 fill
                                 src={item.amodalImage}
@@ -75,7 +75,7 @@ const PredImage = () => {
                             <p>Amodal</p>
                           </div>
                           <div className="flex flex-col gap-2 items-center">
-                            <span className="size-[350px] relative hover:brightness-125">
+                            <span className="size-[250px] relative hover:brightness-125">
                               <Image
                                 fill
                                 src={item.visibleImage}
